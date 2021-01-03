@@ -250,6 +250,13 @@ function start() {
      * Else do nothing.
      */
     function getHash() {
+        if ("" === storage.hashURL)
+        {
+            // ignore hash
+            fetchFromURL();
+            return;
+        }
+
         //Get the target hash from GitLab
         const response = fetch(storage.hashURL).then(async response => {
             return {
@@ -295,7 +302,12 @@ function start() {
 
         response.then(result => {
             if (result.status === 200 && result.data) {
-                if (result.hash === dataHash.trim()) {
+                if ("" === storage.hashURL)
+                {
+                    // ignore hash
+                    storage.ClearURLsData = result.data;
+                    storeHashStatus(2);
+                } else if (result.hash === dataHash.trim()) {
                     storage.ClearURLsData = result.data;
                     storage.dataHash = result.hash;
                     storeHashStatus(2);
