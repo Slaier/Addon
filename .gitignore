@@ -19,3 +19,4 @@ yarn-error.log*
 # WebStorm
 .idea/
 .vscode/
+web-ext-artifacts/
